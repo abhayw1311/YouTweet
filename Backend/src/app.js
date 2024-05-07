@@ -7,7 +7,7 @@ const app = new express();
 
 
 const corsOptions = {
-    origin: '*',
+    origin: 'https://youtube-twitter-clone-frontend.vercel.app',
     credentials: true,
   }
   
