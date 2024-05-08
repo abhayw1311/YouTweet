@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'https://youtube-twitter-clone-backend.vercel.app'
+      '/api': 'https://youtube-twitter-clone-backend-atda.onrender.com/'
     }
   }
 })
