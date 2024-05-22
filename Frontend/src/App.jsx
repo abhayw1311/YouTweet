@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import { AuthLayout, Login, SignUp } from "./components/index";
-import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { getCurrentUser } from "./store/Slices/authSlice";
+import { Route, Routes } from "react-router-dom"; // Import Route and Routes for routing
+import { AuthLayout, Login, SignUp } from "./components/index";// Import various components
+import { Toaster } from "react-hot-toast"; // Import Toaster for toast notifications
+import { useDispatch } from "react-redux";// Import useDispatch hook from react-redux
+import { getCurrentUser } from "./store/Slices/authSlice";// Import action to get the current user
 import {
     History,
     Channel,
@@ -19,18 +19,20 @@ import {
     SearchVideos,
     TermsAndConditions,
     ChannelPlaylist,
-} from "./pages";
-import { EditPersonalInfo, ChangePassword, Layout } from "./components";
+} from "./pages";// Import various pages
+import { EditPersonalInfo, ChangePassword, Layout } from "./components";// Import additional components
 
 function App() {
     const dispatch = useDispatch();
 
+     // useEffect hook to dispatch the getCurxrentUser action when the component mounts
     useEffect(() => {
         dispatch(getCurrentUser());
     }, [dispatch]);
 
     return (
         <>
+         {/* Define routes for the application */}
             <Routes>
                 <Route
                     path="/"
@@ -180,6 +182,7 @@ function App() {
                     }
                 />
             </Routes>
+             {/* Toaster for displaying toast notifications */}
             <Toaster
                 position="top-right"
                 reverseOrder={true}
