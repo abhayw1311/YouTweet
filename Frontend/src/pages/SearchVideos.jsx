@@ -8,42 +8,45 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { useParams, useSearchParams } from "react-router-dom";
 
 function SearchVideos() {
-    const loading = useSelector((state) => state.video?.loading);
-    const videos = useSelector((state) => state.video?.videos);
-    const dispatch = useDispatch();
-    const { query } = useParams();
-    const [filterOpen, setFilterOpen] = useState(false);
-    const [searchParams, setSearchParms] = useSearchParams();
+    const loading = useSelector((state) => state.video?.loading); // Get loading state from the Redux store
+    const videos = useSelector((state) => state.video?.videos); // Get videos from the Redux store
+    const dispatch = useDispatch(); // Initialize the dispatch function
+    const { query } = useParams(); // Get the query parameter from the URL
+    const [filterOpen, setFilterOpen] = useState(false); // State to control the filter visibility
+    const [searchParams, setSearchParms] = useSearchParams(); // Hook to manage search parameters
 
+    // useEffect hook to fetch videos based on search parameters
     useEffect(() => {
-        const sortType = searchParams.get("sortType");
-        const sortBy = searchParams.get("sortBy");
+        const sortType = searchParams.get("sortType");// Get sortType from search parameters
+        const sortBy = searchParams.get("sortBy");// Get sortBy from search parameters
         dispatch(
             getAllVideos({
                 query,
                 sortBy,
                 sortType,
             })
-        );
-        setFilterOpen(false);
-        return () => dispatch(makeVideosNull());
+        ); // Dispatch action to fetch videos based on query and sort parameters
+        setFilterOpen(false);// Close the filter after fetching videos
+        return () => dispatch(makeVideosNull());// Cleanup function to clear videos when the component unmounts
     }, [dispatch, query, searchParams]);
-
+    
+    // Function to handle sorting parameters
     const handleSortParams = (newSortBy, newSortType = "asc") => {
         setSearchParms({ sortBy: newSortBy, sortType: newSortType });
     };
-
+    // Render NoVideosFound component if no videos are found
     if (videos?.totalDocs === 0) {
         return <NoVideosFound text={"Try searching something else"} />;
     }
-
+ // Render HomeSkeleton component while loading
     if (loading) {
         return <HomeSkeleton />;
     }
-
+// Render the SearchVideos component
     return (
         <>
-            <div
+                
+            <div // this is for the filter
                 className="w-full h-10 flex items-center font-bold justify-end cursor-pointer px-8"
                 onClick={() => setFilterOpen((prev) => !prev)}
             >
