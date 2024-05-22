@@ -18,9 +18,7 @@ export const createAccount = createAsyncThunk("register", async (data) => {
     if (data.coverImage) {
         formData.append("coverImage", data.coverImage[0]);
     }
-
     try {
-        console.log("1");
         const response = await axiosInstance.post("/users/register", formData);
         console.log(response.data);
         toast.success("Registered successfully!!!");
