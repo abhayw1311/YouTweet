@@ -1,26 +1,31 @@
 import React from "react";
-import { Logo, Button, Input } from "./index";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { createAccount, userLogin } from "../store/Slices/authSlice.js";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import LoginSkeleton from "../skeleton/loginSkeleton.jsx";
-import GetImagePreview from "./GetImagePreview.jsx";
+import { Logo, Button, Input } from "./index"; // Custom components
+import { useForm } from "react-hook-form"; // Hook for form handling
+import { useNavigate } from "react-router-dom"; // Hook for navigation
+import { createAccount, userLogin } from "../store/Slices/authSlice.js"; // Redux actions for authentication
+import { Link } from "react-router-dom"; // Component for navigation links
+import { useDispatch, useSelector } from "react-redux"; // Hooks for Redux state management
+import LoginSkeleton from "../skeleton/loginSkeleton.jsx"; // Loading component
+import GetImagePreview from "./GetImagePreview.jsx"; // Custom component for image preview
+
 
 function SignUp() {
-    const {
+    const {// Destructuring form handling functions and errors from useForm hook
         handleSubmit,
         register,
         control,
         formState: { errors },
     } = useForm();
+    // Initializing navigation and dispatch functions
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    // Extracting loading state from Redux store
+
     const loading = useSelector((state) => state.auth?.loading);
 
+    // Function to handle form submission
     const submit = async (data) => {
-        console.log(data);
         const response = await dispatch(createAccount(data));
         if (response?.payload?.success) {
             const username = data?.username;
