@@ -1,6 +1,6 @@
-import React from "react";
-import { formatDuration, timeAgo } from "../helpers/timeAgo";
-import { useNavigate } from "react-router-dom";
+import React from "react"; // Importing React
+import { formatDuration, timeAgo } from "../helpers/timeAgo"; // Importing helper functions for formatting time
+import { useNavigate } from "react-router-dom"; // Importing hook for navigation
 
 function VideoList({
     thumbnail,
@@ -12,11 +12,13 @@ function VideoList({
     createdAt,
     videoId,
 }) {
+    
     const navigate = useNavigate();
+    // Function to handle clicking on the avatar
 
     const handleAvatarClick = (e) => {
-        e.stopPropagation();
-        navigate(`/channel/${channelName}`);
+        e.stopPropagation();// Prevents the click event from propagating to parent elements
+        navigate(`/channel/${channelName}`);// Navigate to the channel's page
     };
 
     return (

@@ -1,19 +1,21 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getLikedVideos } from "../store/Slices/likeSlice";
-import HomeSkeleton from "../skeleton/HomeSkeleton";
-import { Container, NoVideosFound, VideoList } from "../components";
-import { makeVideosNull } from "../store/Slices/videoSlice";
+import React, { useEffect } from "react"; // Importing React and useEffect hook
+import { useDispatch, useSelector } from "react-redux"; // Importing hooks from react-redux for state management
+import { getLikedVideos } from "../store/Slices/likeSlice"; // Importing action to fetch liked videos
+import HomeSkeleton from "../skeleton/HomeSkeleton"; // Importing a skeleton component for loading state
+import { Container, NoVideosFound, VideoList } from "../components"; // Importing components
+import { makeVideosNull } from "../store/Slices/videoSlice"; // Importing action to reset video state
 
+// LikedVideos component definition
 function LikedVideos() {
-    const dispatch = useDispatch();
-    const likedVideos = useSelector((state) => state.like?.likedVideos);
-    const loading = useSelector((state) => state.like.loading);
-    window.scrollTo(0, 0);
+    const dispatch = useDispatch();// Hook to dispatch actions
+    const likedVideos = useSelector((state) => state.like?.likedVideos);// Hook to access liked videos from state
+    const loading = useSelector((state) => state.like.loading);// Hook to access loading state
+    window.scrollTo(0, 0);// Scroll to top of the page when the component is rendered
     useEffect(() => {
-        dispatch(getLikedVideos());
+        dispatch(getLikedVideos());// Fetch liked videos when the component is mounted
 
-        return () => dispatch(makeVideosNull())
+
+        return () => dispatch(makeVideosNull())// Reset videos state when the component is unmounted
     }, [dispatch]);
 
     if (loading) {
