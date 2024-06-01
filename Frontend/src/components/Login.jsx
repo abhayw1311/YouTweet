@@ -1,35 +1,38 @@
 import React from "react";
-import { Logo, Button, Input } from "./index";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { getCurrentUser, userLogin } from "../store/Slices/authSlice.js";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import LoginSkeleton from "../skeleton/loginSkeleton.jsx";
+import { Logo, Button, Input } from "./index"; // Custom components
+import { useForm } from "react-hook-form";// Hook for form handling
+import { useNavigate } from "react-router-dom";// Hook for navigation
+import { getCurrentUser, userLogin } from "../store/Slices/authSlice.js";// Redux actions for authentication
+import { Link } from "react-router-dom";// Component for navigation links
+import { useDispatch, useSelector } from "react-redux";// Hooks for Redux state management
+import LoginSkeleton from "../skeleton/loginSkeleton.jsx";// Loading component
 
 function Login() {
-    const {
+    const { // Destructuring form handling functions and errors from useForm hook
         handleSubmit,
         register,
         formState: { errors },
     } = useForm();
+    // Initializing navigation and dispatch functions
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    // Extracting loading state from Redux store
     const loading = useSelector((state) => state.auth?.loading);
-
+    // Function to handle form submission
     const submit = async (data) => {
+        // Check if username input is an email
         const isEmail = data.username.includes("@");
-        const loginData = isEmail
-            ? { email: data.username, password: data.password }
-            : data;
-
+        // Prepare login data based on the type of input
+        const loginData = isEmail ? { email: data.username, password: data.password } : data;
+        // Dispatch login action and get the current user
         const response = await dispatch(userLogin(loginData));
         const user = await dispatch(getCurrentUser());
+        // Navigate to home page if user is authenticated
         if (user && response?.payload) {
             navigate("/");
         }
     };
-
+    // Render loading skeleton if loading state is true
     if (loading) {
         return <LoginSkeleton />;
     }
